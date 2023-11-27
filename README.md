@@ -1,5 +1,7 @@
 # :lock: readonly.nvim
 
+[![Mentioned in Awesome Neovim](https://awesome.re/mentioned-badge-flat.svg)](https://github.com/rockerBOO/awesome-neovim)
+
 A plugin to secure edition of files containing sensible information (passwords, API keys, private keys, etc.).
 
 You cannot guarantee all your Neovim plugins are 100% secured and do not leak sensible information. 
