@@ -64,14 +64,14 @@ After configuration of the plugin opening the `~/.aws/config` file will display 
 
 ## :large_blue_diamond: Pattern matching
 
-The only stuff to configure in the plugin is the `secured_files` array which contains a list of LUA patterns to match specific files and folders.
+The only stuff to configure in the plugin is the `secured_files` array which contains a list of Lua patterns to match specific files and folders.
 
-If you're not comfortable with LUA patterns the most used syntax expressions to match files and folder are the following.
+If you're not comfortable with Lua patterns the most used syntax expressions to match files and folder are the following.
 
 - The `.` (i.e. dot character) is expressed with `%.` ;
 - `.` (a dot) represents all characters.
 
-If you need more read the [Patterns section](https://www.lua.org/manual/5.4/manual.html#6.4.1) of the LUA manual.
+If you need more read the [Patterns section](https://www.lua.org/manual/5.4/manual.html#6.4.1) of the Lua manual.
 
 Also note that the patterns are normalized with the [`vim.fs.normalize()`](https://neovim.io/doc/user/lua.html#vim.fs.normalize()) Neovim function which means that.
 
