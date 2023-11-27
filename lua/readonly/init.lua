@@ -25,9 +25,6 @@ local function is_secured_file(file_path)
 end
 
 function M.init()
-
-  -- Inspired from https://www.statox.fr/posts/2021/03/breaking_habits_floating_window/#adding-a-message-in-the-window
-
   M.augroup = vim.api.nvim_create_augroup("readonly_nvim", {})
   vim.api.nvim_create_autocmd(
     "BufReadPre",
@@ -41,13 +38,12 @@ function M.init()
           require("notify")(
             "This file is marked as secured. \n\n" ..
             "You cannot edit it with a Neovim instance having plugins loaded. \n\n" ..
-            "Instead use `nvim -u NONE myfile` to edit it.",
+            "Instead use `nvim -u NONE myfile` to edit it securely.",
             "error", {
               title = "Sensible file",
               timeout = 10000,
             }
           )
-          -- display_lock_window()
         end
 
       end,
@@ -55,7 +51,6 @@ function M.init()
       pattern = "*",
     }
   )
-
 end
 
 M.init()
