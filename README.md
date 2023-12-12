@@ -2,9 +2,9 @@
 
 [![Mentioned in Awesome Neovim](https://awesome.re/mentioned-badge-flat.svg)](https://github.com/rockerBOO/awesome-neovim)
 
-A plugin to secure edition of files containing sensible information (passwords, API keys, private keys, etc.).
+A plugin to secure edition of files containing sensitive information (passwords, API keys, private keys, etc.).
 
-You cannot guarantee all your Neovim plugins are 100% secured and do not leak sensible information. 
+You cannot guarantee all your Neovim plugins are 100% secured and do not leak sensitive information. 
 
 So do not open your secure file under your standard `nvim` setup!
 
@@ -16,9 +16,9 @@ Are you 100% sure your SSH keys are not sent to Github?
 
 Is it reasonable to have a blind trust with Github privacy? What if the privacy changes over time and is relaxed? What if a Github employee inserts a bug in the Copilot source code which leads to an accidental retention of Prompts? What about a data leak at Github? A hacker succeeding to steal data on the fly?
 
-What about other plugins you installed and are testing? Are you sure they'll not send sensible information remotely when you enter stuffs in your Neovim buffers?
+What about other plugins you installed and are testing? Are you sure they'll not send sensitive information remotely when you enter stuffs in your Neovim buffers?
 
-The readonly.nvim plugin helps to not worry about secure data leaks by marking specific files as "sensible". When you try to open those files they are opened using a read only mode by default and an error is displayed to indicate you to edit the file using a very basic editor (or editor command) instead.
+The readonly.nvim plugin helps to not worry about secure data leaks by marking specific files as "sensitive". When you try to open those files they are opened using a read only mode by default and an error is displayed to indicate you to edit the file using a very basic editor (or editor command) instead.
 
 ## :zap: Requirements
 
@@ -26,7 +26,7 @@ Just Neovim and the [nvim-notify](https://github.com/rcarriga/nvim-notify) plugi
 
 ## :pencil: Usage
 
-Suppose you would like to protect the following sensible files.
+Suppose you would like to protect the following sensitive files.
 
 - `~/.aws/config`
 - `~/.aws/credentials`
