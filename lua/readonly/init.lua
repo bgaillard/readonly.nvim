@@ -40,7 +40,7 @@ function M.init()
             "You cannot edit it with a Neovim instance having plugins loaded. \n\n" ..
             "Instead use `nvim -u NONE myfile` to edit it securely.",
             "error", {
-              title = "Sensible file",
+              title = "Sensitive file",
               timeout = 10000,
             }
           )
