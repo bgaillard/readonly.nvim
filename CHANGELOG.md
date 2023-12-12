@@ -9,3 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 - First stable version of the plugin.
+
+## 1.0.1 - 2023-12-12
+
+### Fixed
+
+- Fix bad sensible English word (https://github.com/bgaillard/readonly.nvim/pull/2)
