@@ -1,58 +1,42 @@
-local config = require("readonly.config")
 local M = {}
 
+-- Default options
+M.opts = {
+  pattern = {}
+}
 
 function M.setup(options)
-  options = options or {}
+  M.opts = vim.tbl_deep_extend("force", M.opts, options or {})
 
-  config.setup(options)
-end
-
----- Check if a file is a secured one.
---
--- @param file_path The path of the file to check.
---
--- @return true if the file is secured, false otherwise.
-local function is_secured_file(file_path)
-  for _, secured_file in ipairs(config.opts.secured_files) do
-    local absolute_secured_file = vim.fs.normalize(secured_file)
-    if file_path:match(absolute_secured_file) then
-      return true
-    end
+  if M.opts.pattern == nil or M.opts.pattern == '' then
+    M.opts.pattern = {}
   end
 
-  return false
-end
+  -- If no patterns are provided, do nothing (otherwise our autocmd would match every file)
+  if next(M.opts.pattern) == nil then
+    return
+  end
 
-function M.init()
   M.augroup = vim.api.nvim_create_augroup("readonly_nvim", {})
   vim.api.nvim_create_autocmd(
-    "BufReadPre",
+    "BufReadCmd",
     {
       callback = function(args)
+        vim.api.nvim_buf_set_lines(args.buf, 0, -1, false, {
+          "This file is marked as secured, you cannot edit it with a Neovim instance having plugins loaded.",
+          "",
+          "Instead use the following command to edit it securely.",
+          "",
+          "nvim -u NONE " .. args.file
+        })
 
-        if is_secured_file(args.file) then
-          vim.api.nvim_buf_set_option(args.buf, "modifiable", false)
-          vim.api.nvim_buf_set_option(args.buf, "readonly", true)
-
-          require("notify")(
-            "This file is marked as secured. \n\n" ..
-            "You cannot edit it with a Neovim instance having plugins loaded. \n\n" ..
-            "Instead use `nvim -u NONE myfile` to edit it securely.",
-            "error", {
-              title = "Sensitive file",
-              timeout = 10000,
-            }
-          )
-        end
-
+        vim.api.nvim_buf_set_option(args.buf, "modifiable", false)
+        vim.api.nvim_buf_set_option(args.buf, "readonly", true)
       end,
       group = M.augroup,
-      pattern = "*",
+      pattern = options.pattern,
     }
   )
 end
-
-M.init()
 
 return M

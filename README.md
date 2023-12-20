@@ -6,7 +6,7 @@ A plugin to secure edition of files containing sensitive information (passwords,
 
 You cannot guarantee all your Neovim plugins are 100% secured and do not leak sensitive information. 
 
-So do not open your secure file under your standard `nvim` setup!
+So do not open a sensitive file under your standard `nvim` setup!
 
 ## :rocket: Goal
 
@@ -18,11 +18,11 @@ Is it reasonable to have a blind trust with Github privacy? What if the privacy 
 
 What about other plugins you installed and are testing? Are you sure they'll not send sensitive information remotely when you enter stuffs in your Neovim buffers?
 
-The readonly.nvim plugin helps to not worry about secure data leaks by marking specific files as "sensitive". When you try to open those files they are opened using a read only mode by default and an error is displayed to indicate you to edit the file using a very basic editor (or editor command) instead.
+The readonly.nvim plugin helps to not worry about secure data leaks by marking specific files as "sensitive". When you try to open a file the reading process is by-passed and an error is displayed to indicate you to edit the file using a very basic editor (or editor command) instead.
 
 ## :zap: Requirements
 
-Just Neovim and the [nvim-notify](https://github.com/rcarriga/nvim-notify) plugin (read the associated [prerequisites](https://github.com/rcarriga/nvim-notify#prerequisites)).
+Just Neovim :smirk:
 
 ## :pencil: Usage
 
@@ -41,17 +41,13 @@ It instructs the plugin to indicate that those files should never be writable us
 ```lua
 return {
   "bgaillard/readonly.nvim",
-  dependencies = {
-    "rcarriga/nvim-notify"
-  },
   opts = {
-    -- see https://neovim.io/doc/user/lua.html#vim.fs.normalize()
-    secured_files = {
-      "~/%.aws/config",
-      "~/%.aws/credentials",
-      "~/%.ssh/.",
-      "~/%.secrets.yaml",
-      "~/%.vault-crypt-files/.",
+    pattern = {
+      vim.fn.expand("~") .. "/.aws/config",
+      vim.fn.expand("~") .. "/.aws/credentials",
+      vim.fn.expand("~") .. "/.ssh/*",
+      vim.fn.expand("~") .. "/.secrets.yaml",
+      vim.fn.expand("~") .. "/.vault-crypt-files/*",
     }
   },
   lazy = false
@@ -64,17 +60,8 @@ After configuration of the plugin opening the `~/.aws/config` file will display 
 
 ## :large_blue_diamond: Pattern matching
 
-The only stuff to configure in the plugin is the `secured_files` array which contains a list of Lua patterns to match specific files and folders.
+The only stuff to configure in the plugin is the `pattern` string or array which contains a list of patterns to match specific files and folders.
 
-If you're not comfortable with Lua patterns the most used syntax expressions to match files and folder are the following.
+The `pattern` option is passed to the [`nvim_create_autocmd`](https://neovim.io/doc/user/api.html#nvim_create_autocmd()) Neovim function internally. You'll find the complete documentation of patterns in the [`autocmd-pattern`](https://neovim.io/doc/user/autocmd.html#autocmd-pattern) section of the Neovim documentation.
 
-- The `.` (i.e. dot character) is expressed with `%.` ;
-- `.` (a dot) represents all characters.
-
-If you need more read the [Patterns section](https://www.lua.org/manual/5.4/manual.html#6.4.1) of the Lua manual.
-
-Also note that the patterns are normalized with the [`vim.fs.normalize()`](https://neovim.io/doc/user/lua.html#vim.fs.normalize()) Neovim function which means that.
-
-- A `~` character at the beginning of a path is expanded to the user's home directory ;
-- A `\` character is converted to a forward slash `/` ;
-- Environment variables are expanded.
+:bulb: Be careful, as explain in the Neovim documentation `pattern` is NOT automatically expanded (unlike with [`:autocmd`](https://neovim.io/doc/user/autocmd.html#%3Aautocmd)), thus names like "$HOME" and "~" must be expanded explicitly (with `vim.fn.expand("~")` for example).
