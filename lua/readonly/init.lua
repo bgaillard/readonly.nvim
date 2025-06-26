@@ -19,12 +19,6 @@ function M.setup(options)
 
   M.augroup = vim.api.nvim_create_augroup("readonly_nvim", {})
 
-  -- Clear any existing autocommands matching the patterns, it means we do not which any plugin to be active on our
-  -- secure files.
-  for _, v in ipairs(M.opts.pattern) do
-    vim.api.nvim_command("autocmd! * " .. v)
-  end
-
   -- Create an autocommand that will trigger on BufReadCmd for the specified patterns
   vim.api.nvim_create_autocmd(
     "BufReadCmd",

@@ -8,6 +8,7 @@ You cannot guarantee all your Neovim plugins are 100% secured and do not leak se
 
 So do not open a sensitive file under your standard `nvim` setup!
 
+
 ## :rocket: Goal
 
 Suppose you configured [Github Copilot](https://github.com/features/copilot) in your Neovim install and you edit an SSH private key file. 
@@ -22,15 +23,18 @@ The readonly.nvim plugin helps to not worry about secure data leaks by marking s
 
 When you try to open a file the reading process is by-passed and an error is displayed to indicate you to edit the file using a very basic editor (or editor command) instead.
 
+
 ## :zap: Requirements
 
 Just Neovim :smirk:
+
 
 ## Migrating from v1 to v2
 
 Version 1 of the plugin used a `secure_files` option which has been removed and replaced by a new `pattern` option.
 
 The version 1 used standard Lua [Patterns](https://www.lua.org/pil/20.2.html) syntax, the version 2 uses Neovim autocmd patterns syntax. To migrate you need to convert your patterns to Neovim autocmd patterns, see the [Pattern matching](#large_blue_diamond-pattern-matching) section below for more details.
+
 
 ## :pencil: Usage
 
@@ -65,6 +69,7 @@ return {
 After configuration of the plugin opening the `~/.aws/config` file will display the following floating window.
 
 ![readonly.nvim buffer](doc/img/readonly.nvim-buffer.png "readonly.nvim buffer")
+
 
 ## :large_blue_diamond: Pattern matching
 
