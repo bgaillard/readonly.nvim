@@ -18,20 +18,38 @@ function M.setup(options)
   end
 
   M.augroup = vim.api.nvim_create_augroup("readonly_nvim", {})
+
+  -- Clear any existing autocommands matching the patterns, it means we do not which any plugin to be active on our
+  -- secure files.
+  for _, v in ipairs(M.opts.pattern) do
+    vim.api.nvim_command("autocmd! * " .. v)
+  end
+
+  -- Create an autocommand that will trigger on BufReadCmd for the specified patterns
   vim.api.nvim_create_autocmd(
     "BufReadCmd",
     {
       callback = function(args)
+        local ns = vim.api.nvim_create_namespace("readonly_nvim")
+        vim.api.nvim_set_hl_ns(ns)
+
+        vim.api.nvim_set_hl(ns, "Error", { fg = "red" })
+        vim.api.nvim_set_hl(ns, "Command", { fg = "yellow" })
+
         vim.api.nvim_buf_set_lines(args.buf, 0, -1, false, {
           "This file is marked as secured, you cannot edit it with a Neovim instance having plugins loaded.",
           "",
           "Instead use the following command to edit it securely.",
           "",
-          "nvim -u NONE " .. args.file
+          "  nvim -u NONE " .. args.file
         })
 
-        vim.api.nvim_buf_set_option(args.buf, "modifiable", false)
-        vim.api.nvim_buf_set_option(args.buf, "readonly", true)
+        vim.api.nvim_buf_add_highlight(args.buf, ns, "Error", 0, 0, -1)
+        vim.api.nvim_buf_add_highlight(args.buf, ns, "Error", 2, 0, -1)
+        vim.api.nvim_buf_add_highlight(args.buf, ns, "Command", 4, 0, -1)
+
+        vim.api.nvim_set_option_value("modifiable", false, { buf = args.buf })
+        vim.api.nvim_set_option_value("readonly", true, { buf = args.buf })
       end,
       group = M.augroup,
       pattern = options.pattern,

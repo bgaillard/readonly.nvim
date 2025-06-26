@@ -36,7 +36,7 @@ Suppose you would like to protect the following sensitive files.
 
 The following configures the plugin with the [lazy.nvim](https://github.com/folke/lazy.nvim) plugin manager (you can obviously use any plugin manager you like). 
 
-It instructs the plugin to indicate that those files should never be writable using a standard Neovim call (i.e launched with the `nvim` command).
+It instructs the plugin that those files should never be writable using a standard Neovim call (i.e launched with the `nvim` command).
 
 ```lua
 return {
