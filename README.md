@@ -18,11 +18,19 @@ Is it reasonable to have a blind trust with Github privacy? What if the privacy 
 
 What about other plugins you installed and are testing? Are you sure they'll not send sensitive information remotely when you enter stuffs in your Neovim buffers?
 
-The readonly.nvim plugin helps to not worry about secure data leaks by marking specific files as "sensitive". When you try to open a file the reading process is by-passed and an error is displayed to indicate you to edit the file using a very basic editor (or editor command) instead.
+The readonly.nvim plugin helps to not worry about secure data leaks by marking specific files as "sensitive".
+
+When you try to open a file the reading process is by-passed and an error is displayed to indicate you to edit the file using a very basic editor (or editor command) instead.
 
 ## :zap: Requirements
 
 Just Neovim :smirk:
+
+## Migrating from v1 to v2
+
+Version 1 of the plugin used a `secure_files` option which has been removed and replaced by a new `pattern` option.
+
+The version 1 used standard Lua [Patterns](https://www.lua.org/pil/20.2.html) syntax, the version 2 uses Neovim autocmd patterns syntax. To migrate you need to convert your patterns to Neovim autocmd patterns, see the [Pattern matching](#large_blue_diamond-pattern-matching) section below for more details.
 
 ## :pencil: Usage
 
@@ -56,7 +64,7 @@ return {
 
 After configuration of the plugin opening the `~/.aws/config` file will display the following floating window.
 
-![readonly.nvim popup](doc/img/readonly.nvim-popup.png "readonly.nvim popup")
+![readonly.nvim buffer](doc/img/readonly.nvim-buffer.png "readonly.nvim buffer")
 
 ## :large_blue_diamond: Pattern matching
 

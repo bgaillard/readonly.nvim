@@ -15,9 +15,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 - The `secured_files` option is replaced by the `pattern` option which uses a different syntax (see the [README.md](/README.md) file).
+- Do not use the `BufReadPre` event anymore, use the `BufReadCmd` event instead. This allows to never read the file content, so other plugins have now absolutely no chance to read the file content.
 
 ### Removed
 
+- Removed dependency to the [nvim-notify](https://github.com/rcarriga/nvim-notify) plugin (not required and used anymore).
 - Now the plugin does not display the secured file in Neovim buffers to improve security.
 - The `secured_files` option is removed.
 
