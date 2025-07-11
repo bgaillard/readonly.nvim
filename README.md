@@ -35,7 +35,7 @@ If you want to use the notification display mode you also need the [nvim-notify]
 
 To upgrade your configuration from version 1 to version 2 you just need to do 2 things.
 
- 1. Version 1 of the plugin used a `secure_files` option which has been removed and replaced by a new `pattern` option.
+ 1. Version 1 of the plugin used a `secured_files` option which has been removed and replaced by a new `pattern` option.
 
     The `secured_files` option used standard Lua [Patterns](https://www.lua.org/pil/20.2.html) syntax. 
     
